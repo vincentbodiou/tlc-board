@@ -20,14 +20,18 @@ public class Greeting {
 
 	@Persistent
 	private String content;
+	
+	@Persistent
+	private String price;
 
 	@Persistent
 	private Date date;
 
-	public Greeting(User author, String content, Date date) {
+	public Greeting(User author, String content, String price,Date date) {
 		this.author = author;
 		this.content = content;
 		this.date = date;
+		this.price = price;
 	}
 
 	public Key getKey() {
@@ -57,4 +61,13 @@ public class Greeting {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
 }

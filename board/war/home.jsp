@@ -15,10 +15,8 @@
 	if (user != null) {
 %>
 <p>
-	Hello,
-	<%=user.getNickname()%>! (You can <a
-		href="<%=userService.createLogoutURL(request.getRequestURI())%>">sign
-		out</a>.)
+	Bonjour ,
+	<%=user.getNickname()%>! (<a href="<%=userService.createLogoutURL(request.getRequestURI())%>">Deconnexion</a>.)
 </p>
 <%
 	} else {
@@ -39,35 +37,33 @@
 			.execute();
 	if (greetings.isEmpty()) {
 %>
-<p>The guestbook has no messages.</p>
+<p>Il n'y a aucun message.</p>
 <%
 	} else {
 		for (Greeting g : greetings) {
 			if (g.getAuthor() == null) {
 %>
-<p>An anonymous person à écrit:</p>
+<p>Un anonyme à écrit:</p>
 <%
 	} else {
 %>
-<p>	
-	<b><%=g.getAuthor().getNickname()%></b> à écrit :
-	<p style="font-size:10px"><%=g.getDate()%></p>
-</p>
-<%
+<div style="border: 1px solid black">
+	<p>
+		<b><%=g.getAuthor().getNickname()%></b> à écrit :
+	<p style="font-size: 10px"><%=g.getDate()%></p>
+
+
+	<%
 	}
 %>
 <blockquote><%=g.getContent()%></blockquote>
+<div>Prix : <%=g.getPrice()%></div>
+</div>
 <%
 	}
 	}
 	pm.close();
 %>
+<input type="button" value="Ajouter une annonce" onclick="self.location.href='ajouter.jsp'" >
 
-<form action="/sign" method="post">
-	<div>
-		<textarea name="content" rows="3" cols="60"></textarea>
-	</div>
-	<div>
-		<input type="submit" value="Post Greeting" />
-	</div>
-</form>
+

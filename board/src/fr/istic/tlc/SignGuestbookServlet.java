@@ -19,8 +19,11 @@ public class SignGuestbookServlet extends HttpServlet {
         User user = userService.getCurrentUser();
  
         String content = req.getParameter("content");
+        String price = req.getParameter("price");
+        System.out.println(price);
         Date date = new Date();
-        Greeting greeting = new Greeting(user, content, date);
+        
+        Greeting greeting = new Greeting(user, content, price, date);
 
         PersistenceManager pm = PMF.get().getPersistenceManager();
         try {
