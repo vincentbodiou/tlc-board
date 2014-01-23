@@ -25,6 +25,7 @@
 <%
 	PersistenceManager pm = PMF.get().getPersistenceManager();
 		String query = "select from " + Greeting.class.getName();
+		System.out.println(query);
 		List<Greeting> greetings = (List<Greeting>) pm.newQuery(query)
 				.execute();
 		if (greetings.isEmpty()) {
@@ -32,14 +33,13 @@
 <p>Il n'y a aucun message.</p>
 <%
 	} else {
-		SimpleDateFormat formater = new SimpleDateFormat("'le' dd/MM/yyyy 'à' hh:mm:ss");
+		SimpleDateFormat formaterJour = new SimpleDateFormat("'le' dd/MM/yyyy ");
+		SimpleDateFormat formaterHeure = new SimpleDateFormat("'à' hh:mm:ss");
 		%>
-		<table style="border-collapse: collapse;">
-			<tr>
+		<table  class="tableau">
+			<tr style="border:none;">
 				   <th>Date</th>
-			       <th>Auteur</th>
-			       <th>Annonce</th>
-			       <th>Prix</th>
+			       <th>Annonce</th>			      
 	   		</tr>
 		<%
 			for (Greeting g : greetings) {
@@ -49,11 +49,16 @@
 					<%
 						} else {
 					%>						
-							<tr style="border: 1px solid black;">
-									<td><p style="font-size: 10px"><%=formater.format(g.getDate())%></td>
-									<td><b><%=g.getAuthor().getNickname()%></b></td>															
-									<td><%=g.getContent()%></td>									
-									<td>Prix : <%=g.getPrice()%></td>
+							<tr>
+									<td class="colonneDate">
+										<span class="Datejour"><%=formaterJour.format(g.getDate())%></span>
+										<span class="DateHeure"><%=formaterHeure.format(g.getDate())%></span>
+									</td>
+									<td class="colonneInfo">																							
+										<span class="content"><%=g.getContent()%></span>
+										<span class="auteur"><%=g.getAuthor().getNickname()%></span>									
+										<span class="prix">Prix : <%=g.getPrice()%></span>
+									</td>
 							</tr>
 					<%
 						}

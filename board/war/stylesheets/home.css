@@ -9,5 +9,60 @@ table
 }
 td
 {
-    border: 1px solid black;
+    border: none;
+}
+
+tr
+{
+	border-bottom: 1px solid grey;
+}
+
+.dateHeure
+{
+	display: block;
+}
+
+.dateJour
+{
+	display: block;
+}
+
+.auteur
+{
+	display: block;
+}
+
+.prix
+{
+	display: block;
+	font-weight: bold;
+	margin-top: 15px;
+}
+
+.content
+{
+	display: block;
+	font-weight: bold;
+	color: red;
+}
+
+.tableau
+{
+	margin-top : 20px;
+	width: 100%;
+	border:none;
+	text-align: left; 
+}
+
+td.colonneInfo {
+	height: 100px;
+	padding: 10px;
+	width: 70%;
+}
+
+td.colonneDate {
+	vertical-align: middle;
+	font-size: 0.7em;
+	padding: 10px;
+	width: 10%;	
 }
