@@ -21,14 +21,74 @@
 		href="<%=userService.createLogoutURL(request.getRequestURI())%>">Deconnexion</a>.)
 </p>
 
-<input type="button" value="Ajouter une annonce" onclick="self.location.href='ajouter.jsp'"> 
+<form action="/sign" method="post" enctype='multipart/form-data'>
+	
+	<table id="tableAnnonce" name="tableAnnonce"> 
+	<thead>	
+	<tr>
+		<td>
+			Votre annonce
+		</td>
+		<td>
+			Prix
+		</td>
+	</tr>
+	</thead>
+	<tbody id="body" >
+	<td>
+		<input type="text" value="toto" name="titi"/>
+	</td>
+	</tbody>
+	</table>
+	
+	<div>
+		Votre annonce : <br></b><textarea id ="annonce" name="contentInput" rows="3" cols="60"></textarea>
+	</div>
+	<div>
+		Prix : <input name="priceInput" id="prix" type="text" placeholder="prix"></input>
+	</div>
+	
+	<div>
+		<input type="submit" value="Publier" />
+	</div>
+	<div>
+		<input type="button" value="Ajouter" onClick="javascript:addRow('tableAnnonce');" />
+	</div>
+	
+	<script type="text/javascript">
+	function addRow(tableau){
+		
+		var ad = document.getElementById('annonce');
+		var price = document.getElementById('prix');		
+	    tableau = document.getElementById(tableau);
+	    var body = document.getElementById("body");
+	     
+	    var tr = document.createElement('tr'); //On créé une ligne d'annonce
+	    //On ajoute autant les cellules
+	    
+	    var td = document.createElement('td');
+        tr.appendChild(td);
+        td.innerHTML = ad.value + " <input name='i' type=\"hidden\" value='"+ad.value+"' /> ";
+        
+        var td = document.createElement('td');
+        tr.appendChild(td);
+        td.innerHTML = price.value;
+        
+        ad.value = "";
+        price.value = "";        
+
+	    body.appendChild(tr);
+	}
+</script>
+</form>
 <%
-	PersistenceManager pm = PMF.get().getPersistenceManager();
-		String query = "select from " + Greeting.class.getName();
-		System.out.println(query);
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		String query = "select from " + Greeting.class.getName() +" ANCESTOR IS " + user;//+ " where author.email=='test@example.com'" ;
+		System.out.println(user.getNickname());
+		
 		List<Greeting> greetings = (List<Greeting>) pm.newQuery(query)
 				.execute();
-		if (greetings.isEmpty()) {
+		if (greetings.isEmpty()) {			
 %>
 <p>Il n'y a aucun message.</p>
 <%
@@ -43,11 +103,7 @@
 	   		</tr>
 		<%
 			for (Greeting g : greetings) {
-				if (g.getAuthor() == null) {
-					%>
-					<p>Un anonyme à écrit:</p>
-					<%
-						} else {
+				if (g.getAuthor() != null) {
 					%>						
 							<tr>
 									<td class="colonneDate">
